@@ -41,18 +41,16 @@ body{
 .upload-hint{font-size:13px;color:var(--text-muted);}
 .upload-area input{display:none;}
 
-/* Theme selection */
 .themes-section{max-width:900px;margin:0 auto;padding:0 24px;display:none;}
 .themes-section.visible{display:block;margin-top:32px;}
 .themes-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy);margin-bottom:6px;}
 .themes-subtitle{font-size:14px;color:var(--text-light);margin-bottom:20px;font-weight:300;}
 .themes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;margin-bottom:20px;}
-.theme-chip{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--white);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all 0.2s;user-select:none;font-size:13px;color:var(--text-light);font-weight:400;position:relative;}
+.theme-chip{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--white);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all 0.2s;user-select:none;font-size:13px;color:var(--text-light);font-weight:400;}
 .theme-chip:hover{border-color:var(--gold);background:rgba(200,168,92,0.03);}
 .theme-chip.selected{border-color:var(--gold);background:rgba(200,168,92,0.07);color:var(--text);font-weight:500;}
 .theme-check{width:18px;height:18px;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:2px solid var(--border);transition:all 0.2s;font-size:11px;color:transparent;}
 .theme-chip.selected .theme-check{background:var(--navy);border-color:var(--navy);color:var(--white);}
-.theme-ai-badge{position:absolute;top:5px;right:8px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);font-weight:600;opacity:0.7;}
 .theme-add-row{display:flex;gap:8px;margin-bottom:24px;}
 .theme-add-input{flex:1;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:'Outfit',sans-serif;font-size:13px;color:var(--text);outline:none;background:var(--white);}
 .theme-add-input:focus{border-color:var(--gold);}
@@ -126,7 +124,7 @@ body{
 
 <section class="hero" id="heroSection">
   <h2>Gere contestações com <em>inteligência</em></h2>
-  <p>Faça upload da petição inicial e receba um rascunho completo de contestação trabalhista pronto para revisão.</p>
+  <p>Faça upload da petição inicial e selecione os temas envolvidos para receber um rascunho completo de contestação trabalhista.</p>
   <div class="hero-chips">
     <span>Dispensa Discriminatória</span><span>Insalubridade</span><span>Periculosidade</span>
     <span>Horas Extras</span><span>Danos Morais</span><span>Justa Causa</span>
@@ -140,14 +138,14 @@ body{
   </div>
 </section>
 
-<!-- THEME SELECTION STEP -->
+<!-- THEME SELECTION -->
 <section class="themes-section" id="themesSection">
   <div class="file-badge" id="fileBadge">
     <span id="fileName"></span>
     <span class="x" onclick="resetFile()">✕</span>
   </div>
   <div class="themes-title">Selecione os temas da defesa</div>
-  <div class="themes-subtitle">A IA identificou os temas abaixo na petição inicial. Marque ou desmarque conforme necessário.</div>
+  <div class="themes-subtitle">Marque os temas/pedidos presentes na petição inicial que devem ser abordados na contestação.</div>
   <div class="themes-grid" id="themesGrid"></div>
   <div class="theme-add-row">
     <input class="theme-add-input" id="customThemeInput" placeholder="Adicionar outro tema..." onkeydown="if(event.key==='Enter')addCustomTheme()">
@@ -158,26 +156,19 @@ body{
   <textarea class="context-textarea" id="contextInput" placeholder="Ex: O reclamante foi dispensado por baixo desempenho, conforme avaliação de dezembro/2023. A empresa forneceu todos os EPIs e possui programa de segurança do trabalho..."></textarea>
   <div class="themes-footer" style="margin-top:24px;">
     <div class="themes-count"><strong id="themeCount">0</strong> tema(s) selecionado(s)</div>
-    <button class="generate-btn" id="generateBtn" onclick="generate()">Gerar Contestação</button>
+    <button class="generate-btn" id="generateBtn" onclick="generate()" disabled>Gerar Contestação</button>
   </div>
   <div class="error-box" id="errorBox"></div>
 </section>
 
-<!-- Loading: PDF + theme detection -->
-<section class="progress-section" id="themeProgressSection">
-  <div class="spinner"></div>
-  <div class="progress-text" id="themeProgressText">Extraindo texto do PDF...</div>
-  <div class="progress-step" id="themeProgressStep">Aguarde um momento</div>
-</section>
-
-<!-- Loading: generation -->
+<!-- LOADING -->
 <section class="progress-section" id="progressSection">
   <div class="spinner"></div>
   <div class="progress-text">Gerando contestação completa...</div>
   <div class="progress-step" id="progressStep">Analisando petição inicial</div>
 </section>
 
-<!-- Results -->
+<!-- RESULTS -->
 <section class="results-section" id="resultsSection">
   <div class="results-header">
     <div class="results-title">Contestação Gerada</div>
@@ -226,8 +217,9 @@ var ALL_THEMES=[
   {id:'terceirizacao',label:'Terceirização',icon:'🤝'},
   {id:'comissoes',label:'Comissões',icon:'💵'}
 ];
-var selectedThemes=[],suggestedThemes=[],customThemes=[];
+var selectedThemes=[],customThemes=[];
 
+// Drag and drop
 var ua=document.getElementById('uploadArea');
 ua.addEventListener('dragover',function(e){e.preventDefault();ua.classList.add('active');});
 ua.addEventListener('dragleave',function(){ua.classList.remove('active');});
@@ -238,15 +230,14 @@ function handleFile(file){
   if(!file.name.toLowerCase().endsWith('.pdf')){alert('Por favor, envie um arquivo PDF.');return;}
   document.getElementById('fileName').textContent=file.name;
   var reader=new FileReader();
-  reader.onload=function(e){fileBuffer=e.target.result;extractAndSuggest(new Uint8Array(fileBuffer.slice(0)),file.name);};
+  reader.onload=function(e){
+    fileBuffer=e.target.result;
+    extractTextFromPDF(new Uint8Array(fileBuffer.slice(0)));
+  };
   reader.readAsArrayBuffer(file);
 }
 
-async function extractAndSuggest(data,fname){
-  document.getElementById('heroSection').classList.add('hidden');
-  document.getElementById('themeProgressSection').classList.add('visible');
-  document.getElementById('themeProgressText').textContent='Extraindo texto do PDF...';
-  document.getElementById('themeProgressStep').textContent='Processando '+fname;
+async function extractTextFromPDF(data){
   try{
     var pdf=await pdfjsLib.getDocument({data:data}).promise;
     var allText=[],seen={};
@@ -257,55 +248,24 @@ async function extractAndSuggest(data,fname){
       if(!seen[pageText]){seen[pageText]=true;allText.push('--- Página '+i+' ---\n'+pageText);}
     }
     extractedText=allText.join('\n\n');
-    document.getElementById('themeProgressText').textContent='Identificando temas da petição inicial...';
-    document.getElementById('themeProgressStep').textContent='Analisando pedidos com IA';
-    await suggestThemesFromAI();
-    document.getElementById('themeProgressSection').classList.remove('visible');
+    document.getElementById('heroSection').classList.add('hidden');
     renderThemes();
     document.getElementById('themesSection').classList.add('visible');
   }catch(err){
-    document.getElementById('themeProgressSection').classList.remove('visible');
-    document.getElementById('heroSection').classList.remove('hidden');
-    alert('Erro ao processar o PDF: '+err.message);
+    alert('Erro ao extrair texto do PDF: '+err.message);
   }
-}
-
-async function suggestThemesFromAI(){
-  var themeIds=ALL_THEMES.map(function(t){return t.id;}).join(', ');
-  try{
-    var response=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,
-        messages:[{role:'user',content:'Você é um advogado trabalhista brasileiro experiente. Analise o texto da petição inicial abaixo e identifique TODOS os temas/pedidos presentes.\n\nResponda SOMENTE com um JSON array de strings, sem nenhum outro texto, sem markdown, sem ```.\n\nUse exatamente os IDs desta lista quando aplicável: '+themeIds+'.\n\nSe houver um tema que não está na lista, crie um ID em snake_case.\n\nPetição Inicial:\n'+extractedText.substring(0,12000)}]
-      })
-    });
-    var data=await response.json();
-    var raw=(data.content&&data.content[0]&&data.content[0].text)||'[]';
-    raw=raw.replace(/```json|```/g,'').trim();
-    var ids=JSON.parse(raw);
-    suggestedThemes=ids;selectedThemes=ids.slice();
-  }catch(err){console.error('Theme suggestion failed:',err);suggestedThemes=[];selectedThemes=[];}
 }
 
 function renderThemes(){
   var grid=document.getElementById('themesGrid');grid.innerHTML='';
   var allThemes=ALL_THEMES.concat(customThemes);
-  // Add any AI-suggested IDs not already in the list
-  suggestedThemes.forEach(function(id){
-    if(!allThemes.some(function(t){return t.id===id;})){
-      var label=id.replace(/_/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase();});
-      var extra={id:id,label:label,icon:'📌'};
-      customThemes.push(extra);allThemes.push(extra);
-    }
-  });
   allThemes.forEach(function(theme){
     var isSel=selectedThemes.indexOf(theme.id)>-1;
-    var wasAI=suggestedThemes.indexOf(theme.id)>-1;
     var chip=document.createElement('div');
     chip.className='theme-chip'+(isSel?' selected':'');
     chip.setAttribute('data-id',theme.id);
     chip.onclick=function(){toggleTheme(theme.id);};
-    chip.innerHTML='<div class="theme-check">✓</div><span>'+theme.icon+'</span><span>'+theme.label+'</span>'+(wasAI?'<span class="theme-ai-badge">IA</span>':'');
+    chip.innerHTML='<div class="theme-check">✓</div><span>'+theme.icon+'</span><span>'+theme.label+'</span>';
     grid.appendChild(chip);
   });
   updateCount();
@@ -325,7 +285,8 @@ function addCustomTheme(){
   var id=val.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,'');
   var allThemes=ALL_THEMES.concat(customThemes);
   if(allThemes.some(function(t){return t.id===id;})){
-    if(selectedThemes.indexOf(id)===-1)selectedThemes.push(id);renderThemes();input.value='';return;
+    if(selectedThemes.indexOf(id)===-1){selectedThemes.push(id);renderThemes();}
+    input.value='';return;
   }
   customThemes.push({id:id,label:val,icon:'📌'});selectedThemes.push(id);renderThemes();input.value='';
 }
@@ -336,7 +297,7 @@ function updateCount(){
 }
 
 function resetFile(){
-  extractedText='';fileBuffer=null;selectedThemes=[];suggestedThemes=[];customThemes=[];
+  extractedText='';fileBuffer=null;selectedThemes=[];customThemes=[];
   document.getElementById('themesSection').classList.remove('visible');
   document.getElementById('heroSection').classList.remove('hidden');
   document.getElementById('fileInput').value='';document.getElementById('contextInput').value='';
@@ -350,36 +311,48 @@ async function generate(){
   document.getElementById('themesSection').classList.remove('visible');
   document.getElementById('progressSection').classList.add('visible');
   document.getElementById('resultsSection').classList.remove('visible');
+
   var context=document.getElementById('contextInput').value.trim();
   var allThemes=ALL_THEMES.concat(customThemes);
   var themeLabels=selectedThemes.map(function(id){var t=allThemes.find(function(th){return th.id===id;});return t?t.label:id;}).join(', ');
-  var text=extractedText;if(text.length>380000)text=text.substring(0,380000)+'\n[TRUNCADO]';
 
-  var steps=['Analisando petição inicial','Construindo argumentos de defesa','Redigindo contestação','Elaborando análise de risco','Finalizando documento'];
+  var text=extractedText;
+  if(text.length>380000)text=text.substring(0,380000)+'\n[TRUNCADO - PDF muito grande]';
+
+  var steps=['Analisando petição inicial','Identificando pedidos e temas','Construindo argumentos de defesa','Redigindo contestação','Elaborando análise de risco','Finalizando documento'];
   var stepIdx=0;
   var stepInterval=setInterval(function(){stepIdx++;if(stepIdx<steps.length)document.getElementById('progressStep').textContent=steps[stepIdx];},12000);
 
   try{
-    var response=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4096,
-        messages:[{role:'user',content:'Você é um advogado trabalhista patronal brasileiro altamente experiente. Elabore uma CONTESTAÇÃO TRABALHISTA completa e profissional para o empregador/reclamado com base na petição inicial abaixo.\n\nTEMAS A ABORDAR NA DEFESA (selecionados pelo advogado): '+themeLabels+'\n\nIMPORTANTE: Aborde SOMENTE os temas listados acima. Não adicione outros temas.\n\n'+(context?'INFORMAÇÕES ADICIONAIS DA EMPRESA: '+context+'\n\n':'')+'Estrutura obrigatória:\n1. Endereçamento ao juízo\n2. Qualificação das partes\n3. Preliminares (se aplicável)\n4. Mérito — com argumentação detalhada para CADA tema selecionado\n5. Dos pedidos\n6. Requerimentos finais\n\nUse linguagem jurídica formal brasileira, cite artigos da CLT, súmulas do TST e jurisprudência relevante. Seja persuasivo na defesa patronal.\n\nApós a contestação, adicione uma seção separada começando com:\n## ANÁLISE DE QUANTUM\nPara cada tema, indique: Tema | Risco (Alto/Médio/Baixo) | Justificativa breve\n\nPetição Inicial:\n'+text.substring(0,15000)}]
-      })
+    var response=await fetch('/api/contestacao',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({text:text,context:context,themes:themeLabels})
     });
     clearInterval(stepInterval);
-    if(!response.ok){var errData=await response.json().catch(function(){return{};});throw new Error((errData.error&&errData.error.message)||'Erro '+response.status);}
+    if(!response.ok){
+      var errData=await response.json().catch(function(){return{error:'Erro '+response.status};});
+      throw new Error(errData.error||'Erro '+response.status);
+    }
     var data=await response.json();
-    var fullResponse=(data.content&&data.content[0]&&data.content[0].text)||'';
-    var splitIdx=fullResponse.indexOf('## ANÁLISE DE QUANTUM');
-    if(splitIdx===-1)splitIdx=fullResponse.indexOf('## ETAPA 4');
-    if(splitIdx===-1)splitIdx=fullResponse.indexOf('### 1. Tabela de risco');
+    var fullResponse=data.response||'';
+
+    var quantumMarker='## ANÁLISE DE QUANTUM';
+    var quantumMarker2='## ETAPA 4';
+    var quantumMarker3='### 1. Tabela de risco';
+    var splitIdx=fullResponse.indexOf(quantumMarker);
+    if(splitIdx===-1)splitIdx=fullResponse.indexOf(quantumMarker2);
+    if(splitIdx===-1)splitIdx=fullResponse.indexOf(quantumMarker3);
+
     if(splitIdx>-1){contestacaoText=fullResponse.substring(0,splitIdx).trim();quantumText=fullResponse.substring(splitIdx).trim();}
-    else{contestacaoText=fullResponse;quantumText='Análise de risco não gerada separadamente.';}
+    else{contestacaoText=fullResponse;quantumText='Análise de risco não gerada separadamente. Verifique a contestação completa.';}
+
     document.getElementById('contestacaoContent').innerText=contestacaoText;
     document.getElementById('quantumContent').innerText=quantumText;
-    // Theme tags in results
+
     var bar=document.getElementById('selectedThemesBar');bar.innerHTML='';
     selectedThemes.forEach(function(id){var t=allThemes.find(function(th){return th.id===id;});var tag=document.createElement('span');tag.className='stag';tag.textContent=(t?t.icon+' '+t.label:id);bar.appendChild(tag);});
+
     document.getElementById('progressSection').classList.remove('visible');
     document.getElementById('resultsSection').classList.add('visible');
   }catch(err){
@@ -405,7 +378,7 @@ function resetAll(){
   document.getElementById('heroSection').classList.remove('hidden');
   document.getElementById('fileInput').value='';document.getElementById('contextInput').value='';
   extractedText='';fileBuffer=null;contestacaoText='';quantumText='';
-  selectedThemes=[];suggestedThemes=[];customThemes=[];
+  selectedThemes=[];customThemes=[];
 }
 </script>
 </body>
