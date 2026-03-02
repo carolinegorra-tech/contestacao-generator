@@ -21,58 +21,19 @@ body{
   min-height:100vh;line-height:1.6;
   background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
 }
-
-/* Header */
-.header{
-  position:sticky;top:0;z-index:100;
-  background:rgba(26,39,68,0.97);backdrop-filter:blur(12px);
-  border-bottom:2px solid var(--gold);
-  padding:16px 0;
-}
-.header-inner{
-  max-width:1100px;margin:0 auto;padding:0 24px;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.header h1{
-  font-family:'Playfair Display',serif;font-size:20px;font-weight:700;
-  color:var(--white);letter-spacing:0.5px;
-}
+.header{position:sticky;top:0;z-index:100;background:rgba(26,39,68,0.97);backdrop-filter:blur(12px);border-bottom:2px solid var(--gold);padding:16px 0;}
+.header-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;}
+.header h1{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--white);letter-spacing:0.5px;}
 .header h1 span{color:var(--gold);font-style:italic;}
-.header-badge{
-  font-size:11px;color:var(--gold);letter-spacing:3px;font-weight:500;
-  text-transform:uppercase;
-}
-
-/* Hero */
-.hero{
-  max-width:1100px;margin:0 auto;padding:80px 24px 40px;text-align:center;
-  transition:all 0.5s ease;
-}
+.header-badge{font-size:11px;color:var(--gold);letter-spacing:3px;font-weight:500;text-transform:uppercase;}
+.hero{max-width:1100px;margin:0 auto;padding:80px 24px 40px;text-align:center;transition:all 0.5s ease;}
 .hero.hidden{display:none;}
-.hero h2{
-  font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,48px);
-  font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:16px;
-}
+.hero h2{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,48px);font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:16px;}
 .hero h2 em{color:var(--gold);font-style:italic;}
-.hero p{
-  font-size:17px;color:var(--text-light);max-width:600px;margin:0 auto 32px;
-  font-weight:300;
-}
-.hero-chips{
-  display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:40px;
-}
-.hero-chips span{
-  background:var(--white);border:1px solid var(--border);border-radius:20px;
-  padding:6px 16px;font-size:12px;color:var(--text-light);font-weight:500;
-  letter-spacing:0.5px;
-}
-
-/* Upload area */
-.upload-area{
-  max-width:700px;margin:0 auto;
-  background:var(--white);border:2px dashed var(--border);border-radius:var(--radius);
-  padding:48px 32px;cursor:pointer;transition:all 0.3s;
-}
+.hero p{font-size:17px;color:var(--text-light);max-width:600px;margin:0 auto 32px;font-weight:300;}
+.hero-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:40px;}
+.hero-chips span{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:6px 16px;font-size:12px;color:var(--text-light);font-weight:500;letter-spacing:0.5px;}
+.upload-area{max-width:700px;margin:0 auto;background:var(--white);border:2px dashed var(--border);border-radius:var(--radius);padding:48px 32px;cursor:pointer;transition:all 0.3s;}
 .upload-area:hover{border-color:var(--gold);background:rgba(200,168,92,0.03);}
 .upload-area.active{border-color:var(--gold);border-style:solid;background:rgba(200,168,92,0.05);}
 .upload-icon{font-size:48px;margin-bottom:12px;opacity:0.3;}
@@ -80,151 +41,77 @@ body{
 .upload-hint{font-size:13px;color:var(--text-muted);}
 .upload-area input{display:none;}
 
-/* Context input */
-.context-section{
-  max-width:900px;margin:0 auto;padding:0 24px;
-  display:none;
-}
-.context-section.visible{display:block;margin-top:32px;}
-.file-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--navy);color:var(--white);border-radius:8px;
-  padding:10px 20px;font-size:14px;font-weight:500;margin-bottom:20px;
-}
-.file-badge .x{
-  cursor:pointer;opacity:0.6;font-size:18px;margin-left:8px;
-}
+/* Theme selection */
+.themes-section{max-width:900px;margin:0 auto;padding:0 24px;display:none;}
+.themes-section.visible{display:block;margin-top:32px;}
+.themes-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy);margin-bottom:6px;}
+.themes-subtitle{font-size:14px;color:var(--text-light);margin-bottom:20px;font-weight:300;}
+.themes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;margin-bottom:20px;}
+.theme-chip{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--white);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all 0.2s;user-select:none;font-size:13px;color:var(--text-light);font-weight:400;position:relative;}
+.theme-chip:hover{border-color:var(--gold);background:rgba(200,168,92,0.03);}
+.theme-chip.selected{border-color:var(--gold);background:rgba(200,168,92,0.07);color:var(--text);font-weight:500;}
+.theme-check{width:18px;height:18px;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:2px solid var(--border);transition:all 0.2s;font-size:11px;color:transparent;}
+.theme-chip.selected .theme-check{background:var(--navy);border-color:var(--navy);color:var(--white);}
+.theme-ai-badge{position:absolute;top:5px;right:8px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);font-weight:600;opacity:0.7;}
+.theme-add-row{display:flex;gap:8px;margin-bottom:24px;}
+.theme-add-input{flex:1;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:'Outfit',sans-serif;font-size:13px;color:var(--text);outline:none;background:var(--white);}
+.theme-add-input:focus{border-color:var(--gold);}
+.theme-add-input::placeholder{color:var(--text-muted);}
+.theme-add-btn{padding:10px 20px;background:var(--white);border:1px solid var(--border);border-radius:8px;font-family:'Outfit',sans-serif;font-size:13px;color:var(--navy);cursor:pointer;font-weight:500;transition:all 0.2s;}
+.theme-add-btn:hover{border-color:var(--gold);background:rgba(200,168,92,0.05);}
+.themes-count{font-size:13px;color:var(--text-muted);}
+.themes-count strong{color:var(--gold);font-size:17px;font-weight:600;}
+.themes-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+
+.file-badge{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:var(--white);border-radius:8px;padding:10px 20px;font-size:14px;font-weight:500;margin-bottom:20px;}
+.file-badge .x{cursor:pointer;opacity:0.6;font-size:18px;margin-left:8px;}
 .file-badge .x:hover{opacity:1;}
-.context-label{
-  font-size:14px;font-weight:600;color:var(--navy);margin-bottom:8px;
-  display:block;
-}
+.context-label{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:8px;display:block;}
 .context-hint{font-size:12px;color:var(--text-muted);margin-bottom:8px;display:block;}
-.context-textarea{
-  width:100%;min-height:120px;border:1px solid var(--border);border-radius:var(--radius);
-  padding:16px;font-family:'Outfit',sans-serif;font-size:14px;color:var(--text);
-  resize:vertical;background:var(--white);outline:none;transition:border-color 0.2s;
-}
+.context-textarea{width:100%;min-height:120px;border:1px solid var(--border);border-radius:var(--radius);padding:16px;font-family:'Outfit',sans-serif;font-size:14px;color:var(--text);resize:vertical;background:var(--white);outline:none;transition:border-color 0.2s;}
 .context-textarea:focus{border-color:var(--gold);}
 .context-textarea::placeholder{color:var(--text-muted);}
-
-/* Generate button */
-.generate-btn{
-  display:block;margin:24px auto 0;
-  background:var(--navy);color:var(--white);
-  border:none;border-radius:var(--radius);
-  padding:16px 48px;font-family:'Outfit',sans-serif;font-size:16px;font-weight:600;
-  cursor:pointer;transition:all 0.3s;letter-spacing:0.5px;
-}
+.generate-btn{display:block;background:var(--navy);color:var(--white);border:none;border-radius:var(--radius);padding:16px 48px;font-family:'Outfit',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:all 0.3s;letter-spacing:0.5px;}
 .generate-btn:hover{background:var(--navy-light);transform:translateY(-1px);box-shadow:var(--shadow);}
 .generate-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
 
-/* Progress */
-.progress-section{
-  max-width:900px;margin:32px auto 0;padding:0 24px;
-  display:none;text-align:center;
-}
+.progress-section{max-width:900px;margin:32px auto 0;padding:0 24px;display:none;text-align:center;}
 .progress-section.visible{display:block;}
-.spinner{
-  width:48px;height:48px;border:3px solid var(--border);border-top:3px solid var(--gold);
-  border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px;
-}
+.spinner{width:48px;height:48px;border:3px solid var(--border);border-top:3px solid var(--gold);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px;}
 @keyframes spin{to{transform:rotate(360deg)}}
 .progress-text{font-size:14px;color:var(--text-light);font-weight:400;}
-.progress-step{
-  font-size:13px;color:var(--gold);font-weight:500;margin-top:8px;
-  letter-spacing:0.5px;
-}
+.progress-step{font-size:13px;color:var(--gold);font-weight:500;margin-top:8px;letter-spacing:0.5px;}
 
-/* Results */
-.results-section{
-  max-width:900px;margin:32px auto 60px;padding:0 24px;
-  display:none;
-}
+.results-section{max-width:900px;margin:32px auto 60px;padding:0 24px;display:none;}
 .results-section.visible{display:block;}
-.results-header{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:20px;flex-wrap:wrap;gap:12px;
-}
-.results-title{
-  font-family:'Playfair Display',serif;font-size:24px;font-weight:700;
-  color:var(--navy);
-}
+.results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+.results-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);}
 .results-actions{display:flex;gap:8px;flex-wrap:wrap;}
-.action-btn{
-  background:var(--white);border:1px solid var(--border);border-radius:8px;
-  padding:8px 16px;font-family:'Outfit',sans-serif;font-size:13px;
-  color:var(--text);cursor:pointer;transition:all 0.2s;font-weight:500;
-}
+.action-btn{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:8px 16px;font-family:'Outfit',sans-serif;font-size:13px;color:var(--text);cursor:pointer;transition:all 0.2s;font-weight:500;}
 .action-btn:hover{border-color:var(--gold);background:rgba(200,168,92,0.05);}
 .action-btn.primary{background:var(--navy);color:var(--white);border-color:var(--navy);}
 .action-btn.primary:hover{background:var(--navy-light);}
-
-/* Tabs */
-.tabs{
-  display:flex;gap:0;margin-bottom:24px;border-bottom:2px solid var(--border);
-}
-.tab{
-  padding:12px 24px;font-size:14px;font-weight:500;color:var(--text-muted);
-  cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;
-  transition:all 0.2s;
-}
+.tabs{display:flex;gap:0;margin-bottom:24px;border-bottom:2px solid var(--border);}
+.tab{padding:12px 24px;font-size:14px;font-weight:500;color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.2s;}
 .tab:hover{color:var(--text);}
 .tab.active{color:var(--navy);border-bottom-color:var(--gold);}
+.content-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--border);overflow:hidden;}
+.content-body{padding:32px;font-size:14px;line-height:1.8;color:var(--text);white-space:pre-wrap;font-family:'Outfit',sans-serif;max-height:70vh;overflow-y:auto;}
 
-/* Content card */
-.content-card{
-  background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);
-  border:1px solid var(--border);overflow:hidden;
-}
-.content-body{
-  padding:32px;font-size:14px;line-height:1.8;color:var(--text);
-  white-space:pre-wrap;font-family:'Outfit',sans-serif;
-  max-height:70vh;overflow-y:auto;
-}
-.content-body h1,.content-body h2,.content-body h3{
-  font-family:'Playfair Display',serif;color:var(--navy);margin:24px 0 12px;
-}
-.content-body h1{font-size:20px;}
-.content-body h2{font-size:18px;}
-.content-body h3{font-size:16px;}
-.content-body strong{color:var(--navy);}
+.selected-themes-bar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;}
+.selected-themes-bar .stag{padding:4px 12px;background:rgba(200,168,92,0.1);border:1px solid rgba(200,168,92,0.3);border-radius:20px;font-size:11px;color:var(--navy);font-weight:500;letter-spacing:0.3px;}
 
-/* Quantum table */
-.quantum-table{width:100%;border-collapse:collapse;font-size:13px;margin:16px 0;}
-.quantum-table th{
-  background:var(--navy);color:var(--white);padding:10px 12px;
-  text-align:left;font-weight:500;
-}
-.quantum-table td{
-  padding:10px 12px;border-bottom:1px solid var(--border);
-}
-.quantum-table tr:nth-child(even){background:var(--off-white);}
-.risk-high{color:#DC2626;font-weight:600;}
-.risk-medium{color:#D97706;font-weight:600;}
-.risk-low{color:#059669;font-weight:600;}
-
-/* Error */
-.error-box{
-  background:#FEF2F2;border:1px solid #FECACA;border-radius:var(--radius);
-  padding:16px 20px;color:#991B1B;font-size:14px;margin-top:16px;
-  display:none;
-}
+.error-box{background:#FEF2F2;border:1px solid #FECACA;border-radius:var(--radius);padding:16px 20px;color:#991B1B;font-size:14px;margin-top:16px;display:none;}
 .error-box.visible{display:block;}
+.footer{text-align:center;padding:32px 24px;font-size:12px;color:var(--text-muted);}
 
-/* Footer */
-.footer{
-  text-align:center;padding:32px 24px;
-  font-size:12px;color:var(--text-muted);
-}
-
-/* Mobile */
 @media(max-width:640px){
   .header-inner{flex-direction:column;gap:4px;}
   .hero{padding:48px 16px 24px;}
   .content-body{padding:20px;font-size:13px;}
   .tabs{overflow-x:auto;}
   .tab{padding:10px 16px;font-size:13px;white-space:nowrap;}
+  .themes-grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -241,14 +128,9 @@ body{
   <h2>Gere contestações com <em>inteligência</em></h2>
   <p>Faça upload da petição inicial e receba um rascunho completo de contestação trabalhista pronto para revisão.</p>
   <div class="hero-chips">
-    <span>Dispensa Discriminatória</span>
-    <span>Insalubridade</span>
-    <span>Periculosidade</span>
-    <span>Horas Extras</span>
-    <span>Danos Morais</span>
-    <span>Justa Causa</span>
-    <span>Vínculo</span>
-    <span>Qualquer Pedido</span>
+    <span>Dispensa Discriminatória</span><span>Insalubridade</span><span>Periculosidade</span>
+    <span>Horas Extras</span><span>Danos Morais</span><span>Justa Causa</span>
+    <span>Vínculo</span><span>Qualquer Pedido</span>
   </div>
   <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
     <div class="upload-icon">📄</div>
@@ -258,24 +140,44 @@ body{
   </div>
 </section>
 
-<section class="context-section" id="contextSection">
+<!-- THEME SELECTION STEP -->
+<section class="themes-section" id="themesSection">
   <div class="file-badge" id="fileBadge">
     <span id="fileName"></span>
     <span class="x" onclick="resetFile()">✕</span>
   </div>
+  <div class="themes-title">Selecione os temas da defesa</div>
+  <div class="themes-subtitle">A IA identificou os temas abaixo na petição inicial. Marque ou desmarque conforme necessário.</div>
+  <div class="themes-grid" id="themesGrid"></div>
+  <div class="theme-add-row">
+    <input class="theme-add-input" id="customThemeInput" placeholder="Adicionar outro tema..." onkeydown="if(event.key==='Enter')addCustomTheme()">
+    <button class="theme-add-btn" onclick="addCustomTheme()">+ Adicionar</button>
+  </div>
   <label class="context-label">Informações adicionais da empresa (opcional)</label>
   <span class="context-hint">Motivo da dispensa, avaliações de desempenho, EPIs fornecidos, políticas internas, qualquer contexto que fortaleça a defesa.</span>
   <textarea class="context-textarea" id="contextInput" placeholder="Ex: O reclamante foi dispensado por baixo desempenho, conforme avaliação de dezembro/2023. A empresa forneceu todos os EPIs e possui programa de segurança do trabalho..."></textarea>
-  <button class="generate-btn" id="generateBtn" onclick="generate()">Gerar Contestação</button>
+  <div class="themes-footer" style="margin-top:24px;">
+    <div class="themes-count"><strong id="themeCount">0</strong> tema(s) selecionado(s)</div>
+    <button class="generate-btn" id="generateBtn" onclick="generate()">Gerar Contestação</button>
+  </div>
   <div class="error-box" id="errorBox"></div>
 </section>
 
+<!-- Loading: PDF + theme detection -->
+<section class="progress-section" id="themeProgressSection">
+  <div class="spinner"></div>
+  <div class="progress-text" id="themeProgressText">Extraindo texto do PDF...</div>
+  <div class="progress-step" id="themeProgressStep">Aguarde um momento</div>
+</section>
+
+<!-- Loading: generation -->
 <section class="progress-section" id="progressSection">
   <div class="spinner"></div>
   <div class="progress-text">Gerando contestação completa...</div>
   <div class="progress-step" id="progressStep">Analisando petição inicial</div>
 </section>
 
+<!-- Results -->
 <section class="results-section" id="resultsSection">
   <div class="results-header">
     <div class="results-title">Contestação Gerada</div>
@@ -285,6 +187,7 @@ body{
       <button class="action-btn" onclick="resetAll()">Nova Análise</button>
     </div>
   </div>
+  <div class="selected-themes-bar" id="selectedThemesBar"></div>
   <div class="tabs">
     <div class="tab active" onclick="switchTab('contestacao')">Contestação</div>
     <div class="tab" onclick="switchTab('quantum')">Análise de Risco</div>
@@ -295,134 +198,194 @@ body{
   </div>
 </section>
 
-<div class="footer">
-  Contestação AI — Ferramenta de apoio à advocacia. O conteúdo gerado deve ser revisado por advogado habilitado antes do uso.
-</div>
+<div class="footer">Contestação AI — Ferramenta de apoio à advocacia. O conteúdo gerado deve ser revisado por advogado habilitado antes do uso.</div>
 
 <script>
-var extractedText='';
-var fileBuffer=null;
-var contestacaoText='';
-var quantumText='';
+var extractedText='',fileBuffer=null,contestacaoText='',quantumText='';
+var ALL_THEMES=[
+  {id:'horas_extras',label:'Horas Extras',icon:'⏰'},
+  {id:'danos_morais',label:'Danos Morais',icon:'💔'},
+  {id:'insalubridade',label:'Insalubridade',icon:'☣️'},
+  {id:'periculosidade',label:'Periculosidade',icon:'⚡'},
+  {id:'dispensa_discriminatoria',label:'Dispensa Discriminatória',icon:'🚫'},
+  {id:'justa_causa',label:'Reversão de Justa Causa',icon:'⚖️'},
+  {id:'vinculo',label:'Vínculo Empregatício',icon:'🔗'},
+  {id:'equiparacao',label:'Equiparação Salarial',icon:'📊'},
+  {id:'acumulo_desvio',label:'Acúmulo/Desvio de Função',icon:'🔄'},
+  {id:'verbas_rescisorias',label:'Verbas Rescisórias',icon:'💰'},
+  {id:'fgts',label:'FGTS / Multa 40%',icon:'🏦'},
+  {id:'seguro_desemprego',label:'Seguro Desemprego',icon:'📋'},
+  {id:'intervalo',label:'Intervalo Intrajornada',icon:'🍽️'},
+  {id:'adicional_noturno',label:'Adicional Noturno',icon:'🌙'},
+  {id:'estabilidade',label:'Estabilidade Provisória',icon:'🛡️'},
+  {id:'assedio',label:'Assédio Moral/Sexual',icon:'⚠️'},
+  {id:'doenca_ocupacional',label:'Doença Ocupacional',icon:'🏥'},
+  {id:'honorarios',label:'Honorários Advocatícios',icon:'📑'},
+  {id:'litigancia_ma_fe',label:'Litigância de Má-fé',icon:'🎭'},
+  {id:'grupo_economico',label:'Grupo Econômico',icon:'🏢'},
+  {id:'terceirizacao',label:'Terceirização',icon:'🤝'},
+  {id:'comissoes',label:'Comissões',icon:'💵'}
+];
+var selectedThemes=[],suggestedThemes=[],customThemes=[];
 
-// Drag and drop
 var ua=document.getElementById('uploadArea');
 ua.addEventListener('dragover',function(e){e.preventDefault();ua.classList.add('active');});
 ua.addEventListener('dragleave',function(){ua.classList.remove('active');});
-ua.addEventListener('drop',function(e){
-  e.preventDefault();ua.classList.remove('active');
-  if(e.dataTransfer.files.length>0) handleFile(e.dataTransfer.files[0]);
-});
-document.getElementById('fileInput').addEventListener('change',function(e){
-  if(e.target.files.length>0) handleFile(e.target.files[0]);
-});
+ua.addEventListener('drop',function(e){e.preventDefault();ua.classList.remove('active');if(e.dataTransfer.files.length>0)handleFile(e.dataTransfer.files[0]);});
+document.getElementById('fileInput').addEventListener('change',function(e){if(e.target.files.length>0)handleFile(e.target.files[0]);});
 
 function handleFile(file){
-  if(!file.name.toLowerCase().endsWith('.pdf')){
-    alert('Por favor, envie um arquivo PDF.');return;
-  }
+  if(!file.name.toLowerCase().endsWith('.pdf')){alert('Por favor, envie um arquivo PDF.');return;}
   document.getElementById('fileName').textContent=file.name;
   var reader=new FileReader();
-  reader.onload=function(e){
-    fileBuffer=e.target.result;
-    extractTextFromPDF(new Uint8Array(fileBuffer.slice(0)));
-  };
+  reader.onload=function(e){fileBuffer=e.target.result;extractAndSuggest(new Uint8Array(fileBuffer.slice(0)),file.name);};
   reader.readAsArrayBuffer(file);
 }
 
-async function extractTextFromPDF(data){
+async function extractAndSuggest(data,fname){
+  document.getElementById('heroSection').classList.add('hidden');
+  document.getElementById('themeProgressSection').classList.add('visible');
+  document.getElementById('themeProgressText').textContent='Extraindo texto do PDF...';
+  document.getElementById('themeProgressStep').textContent='Processando '+fname;
   try{
     var pdf=await pdfjsLib.getDocument({data:data}).promise;
-    var totalPages=pdf.numPages;
-    var allText=[];
-    var seen={};
-    for(var i=1;i<=totalPages;i++){
+    var allText=[],seen={};
+    for(var i=1;i<=pdf.numPages;i++){
       var page=await pdf.getPage(i);
       var content=await page.getTextContent();
       var pageText=content.items.map(function(item){return item.str;}).join(' ');
-      if(!seen[pageText]){
-        seen[pageText]=true;
-        allText.push('--- Página '+i+' ---\n'+pageText);
-      }
+      if(!seen[pageText]){seen[pageText]=true;allText.push('--- Página '+i+' ---\n'+pageText);}
     }
     extractedText=allText.join('\n\n');
-    // Show context section
-    document.getElementById('heroSection').classList.add('hidden');
-    document.getElementById('contextSection').classList.add('visible');
+    document.getElementById('themeProgressText').textContent='Identificando temas da petição inicial...';
+    document.getElementById('themeProgressStep').textContent='Analisando pedidos com IA';
+    await suggestThemesFromAI();
+    document.getElementById('themeProgressSection').classList.remove('visible');
+    renderThemes();
+    document.getElementById('themesSection').classList.add('visible');
   }catch(err){
-    alert('Erro ao extrair texto do PDF: '+err.message);
+    document.getElementById('themeProgressSection').classList.remove('visible');
+    document.getElementById('heroSection').classList.remove('hidden');
+    alert('Erro ao processar o PDF: '+err.message);
   }
 }
 
+async function suggestThemesFromAI(){
+  var themeIds=ALL_THEMES.map(function(t){return t.id;}).join(', ');
+  try{
+    var response=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,
+        messages:[{role:'user',content:'Você é um advogado trabalhista brasileiro experiente. Analise o texto da petição inicial abaixo e identifique TODOS os temas/pedidos presentes.\n\nResponda SOMENTE com um JSON array de strings, sem nenhum outro texto, sem markdown, sem ```.\n\nUse exatamente os IDs desta lista quando aplicável: '+themeIds+'.\n\nSe houver um tema que não está na lista, crie um ID em snake_case.\n\nPetição Inicial:\n'+extractedText.substring(0,12000)}]
+      })
+    });
+    var data=await response.json();
+    var raw=(data.content&&data.content[0]&&data.content[0].text)||'[]';
+    raw=raw.replace(/```json|```/g,'').trim();
+    var ids=JSON.parse(raw);
+    suggestedThemes=ids;selectedThemes=ids.slice();
+  }catch(err){console.error('Theme suggestion failed:',err);suggestedThemes=[];selectedThemes=[];}
+}
+
+function renderThemes(){
+  var grid=document.getElementById('themesGrid');grid.innerHTML='';
+  var allThemes=ALL_THEMES.concat(customThemes);
+  // Add any AI-suggested IDs not already in the list
+  suggestedThemes.forEach(function(id){
+    if(!allThemes.some(function(t){return t.id===id;})){
+      var label=id.replace(/_/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase();});
+      var extra={id:id,label:label,icon:'📌'};
+      customThemes.push(extra);allThemes.push(extra);
+    }
+  });
+  allThemes.forEach(function(theme){
+    var isSel=selectedThemes.indexOf(theme.id)>-1;
+    var wasAI=suggestedThemes.indexOf(theme.id)>-1;
+    var chip=document.createElement('div');
+    chip.className='theme-chip'+(isSel?' selected':'');
+    chip.setAttribute('data-id',theme.id);
+    chip.onclick=function(){toggleTheme(theme.id);};
+    chip.innerHTML='<div class="theme-check">✓</div><span>'+theme.icon+'</span><span>'+theme.label+'</span>'+(wasAI?'<span class="theme-ai-badge">IA</span>':'');
+    grid.appendChild(chip);
+  });
+  updateCount();
+}
+
+function toggleTheme(id){
+  var idx=selectedThemes.indexOf(id);
+  if(idx>-1)selectedThemes.splice(idx,1);else selectedThemes.push(id);
+  document.querySelectorAll('.theme-chip').forEach(function(chip){
+    if(chip.getAttribute('data-id')===id)chip.classList.toggle('selected',selectedThemes.indexOf(id)>-1);
+  });
+  updateCount();
+}
+
+function addCustomTheme(){
+  var input=document.getElementById('customThemeInput');var val=input.value.trim();if(!val)return;
+  var id=val.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,'');
+  var allThemes=ALL_THEMES.concat(customThemes);
+  if(allThemes.some(function(t){return t.id===id;})){
+    if(selectedThemes.indexOf(id)===-1)selectedThemes.push(id);renderThemes();input.value='';return;
+  }
+  customThemes.push({id:id,label:val,icon:'📌'});selectedThemes.push(id);renderThemes();input.value='';
+}
+
+function updateCount(){
+  document.getElementById('themeCount').textContent=selectedThemes.length;
+  document.getElementById('generateBtn').disabled=selectedThemes.length===0;
+}
+
 function resetFile(){
-  extractedText='';fileBuffer=null;
-  document.getElementById('contextSection').classList.remove('visible');
+  extractedText='';fileBuffer=null;selectedThemes=[];suggestedThemes=[];customThemes=[];
+  document.getElementById('themesSection').classList.remove('visible');
   document.getElementById('heroSection').classList.remove('hidden');
-  document.getElementById('fileInput').value='';
-  document.getElementById('contextInput').value='';
+  document.getElementById('fileInput').value='';document.getElementById('contextInput').value='';
 }
 
 async function generate(){
   if(!extractedText){alert('Nenhum texto extraído do PDF.');return;}
-  
-  var btn=document.getElementById('generateBtn');
-  btn.disabled=true;
+  if(selectedThemes.length===0){alert('Selecione ao menos um tema.');return;}
+  var btn=document.getElementById('generateBtn');btn.disabled=true;
   document.getElementById('errorBox').classList.remove('visible');
+  document.getElementById('themesSection').classList.remove('visible');
   document.getElementById('progressSection').classList.add('visible');
   document.getElementById('resultsSection').classList.remove('visible');
-
   var context=document.getElementById('contextInput').value.trim();
-  
-  // Truncate text
-  var text=extractedText;
-  if(text.length>380000) text=text.substring(0,380000)+'\n[TRUNCADO - PDF muito grande]';
+  var allThemes=ALL_THEMES.concat(customThemes);
+  var themeLabels=selectedThemes.map(function(id){var t=allThemes.find(function(th){return th.id===id;});return t?t.label:id;}).join(', ');
+  var text=extractedText;if(text.length>380000)text=text.substring(0,380000)+'\n[TRUNCADO]';
 
-  var steps=['Analisando petição inicial','Identificando pedidos e temas','Construindo argumentos de defesa','Redigindo contestação','Elaborando análise de risco','Finalizando documento'];
+  var steps=['Analisando petição inicial','Construindo argumentos de defesa','Redigindo contestação','Elaborando análise de risco','Finalizando documento'];
   var stepIdx=0;
-  var stepInterval=setInterval(function(){
-    stepIdx++;
-    if(stepIdx<steps.length) document.getElementById('progressStep').textContent=steps[stepIdx];
-  },12000);
+  var stepInterval=setInterval(function(){stepIdx++;if(stepIdx<steps.length)document.getElementById('progressStep').textContent=steps[stepIdx];},12000);
 
   try{
-    var response=await fetch('/api/contestacao',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({text:text,context:context})
+    var response=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4096,
+        messages:[{role:'user',content:'Você é um advogado trabalhista patronal brasileiro altamente experiente. Elabore uma CONTESTAÇÃO TRABALHISTA completa e profissional para o empregador/reclamado com base na petição inicial abaixo.\n\nTEMAS A ABORDAR NA DEFESA (selecionados pelo advogado): '+themeLabels+'\n\nIMPORTANTE: Aborde SOMENTE os temas listados acima. Não adicione outros temas.\n\n'+(context?'INFORMAÇÕES ADICIONAIS DA EMPRESA: '+context+'\n\n':'')+'Estrutura obrigatória:\n1. Endereçamento ao juízo\n2. Qualificação das partes\n3. Preliminares (se aplicável)\n4. Mérito — com argumentação detalhada para CADA tema selecionado\n5. Dos pedidos\n6. Requerimentos finais\n\nUse linguagem jurídica formal brasileira, cite artigos da CLT, súmulas do TST e jurisprudência relevante. Seja persuasivo na defesa patronal.\n\nApós a contestação, adicione uma seção separada começando com:\n## ANÁLISE DE QUANTUM\nPara cada tema, indique: Tema | Risco (Alto/Médio/Baixo) | Justificativa breve\n\nPetição Inicial:\n'+text.substring(0,15000)}]
+      })
     });
     clearInterval(stepInterval);
-    if(!response.ok){
-      var errData=await response.json().catch(function(){return{error:'Erro '+response.status};});
-      throw new Error(errData.error||'Erro '+response.status);
-    }
+    if(!response.ok){var errData=await response.json().catch(function(){return{};});throw new Error((errData.error&&errData.error.message)||'Erro '+response.status);}
     var data=await response.json();
-    var fullResponse=data.response||'';
-    
-    // Split contestação and quantum analysis
-    var quantumMarker='## ANÁLISE DE QUANTUM';
-    var quantumMarker2='## ETAPA 4';
-    var quantumMarker3='### 1. Tabela de risco';
-    var splitIdx=fullResponse.indexOf(quantumMarker);
-    if(splitIdx===-1) splitIdx=fullResponse.indexOf(quantumMarker2);
-    if(splitIdx===-1) splitIdx=fullResponse.indexOf(quantumMarker3);
-    
-    if(splitIdx>-1){
-      contestacaoText=fullResponse.substring(0,splitIdx).trim();
-      quantumText=fullResponse.substring(splitIdx).trim();
-    }else{
-      contestacaoText=fullResponse;
-      quantumText='Análise de risco não gerada separadamente. Verifique a contestação completa.';
-    }
-    
+    var fullResponse=(data.content&&data.content[0]&&data.content[0].text)||'';
+    var splitIdx=fullResponse.indexOf('## ANÁLISE DE QUANTUM');
+    if(splitIdx===-1)splitIdx=fullResponse.indexOf('## ETAPA 4');
+    if(splitIdx===-1)splitIdx=fullResponse.indexOf('### 1. Tabela de risco');
+    if(splitIdx>-1){contestacaoText=fullResponse.substring(0,splitIdx).trim();quantumText=fullResponse.substring(splitIdx).trim();}
+    else{contestacaoText=fullResponse;quantumText='Análise de risco não gerada separadamente.';}
     document.getElementById('contestacaoContent').innerText=contestacaoText;
     document.getElementById('quantumContent').innerText=quantumText;
-    
+    // Theme tags in results
+    var bar=document.getElementById('selectedThemesBar');bar.innerHTML='';
+    selectedThemes.forEach(function(id){var t=allThemes.find(function(th){return th.id===id;});var tag=document.createElement('span');tag.className='stag';tag.textContent=(t?t.icon+' '+t.label:id);bar.appendChild(tag);});
     document.getElementById('progressSection').classList.remove('visible');
     document.getElementById('resultsSection').classList.add('visible');
-    
   }catch(err){
     clearInterval(stepInterval);
     document.getElementById('progressSection').classList.remove('visible');
+    document.getElementById('themesSection').classList.add('visible');
     document.getElementById('errorBox').textContent='Erro: '+err.message;
     document.getElementById('errorBox').classList.add('visible');
   }
@@ -431,40 +394,18 @@ async function generate(){
 
 function switchTab(tab){
   document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
-  if(tab==='contestacao'){
-    document.querySelectorAll('.tab')[0].classList.add('active');
-    document.getElementById('contestacaoContent').style.display='block';
-    document.getElementById('quantumContent').style.display='none';
-  }else{
-    document.querySelectorAll('.tab')[1].classList.add('active');
-    document.getElementById('contestacaoContent').style.display='none';
-    document.getElementById('quantumContent').style.display='block';
-  }
+  if(tab==='contestacao'){document.querySelectorAll('.tab')[0].classList.add('active');document.getElementById('contestacaoContent').style.display='block';document.getElementById('quantumContent').style.display='none';}
+  else{document.querySelectorAll('.tab')[1].classList.add('active');document.getElementById('contestacaoContent').style.display='none';document.getElementById('quantumContent').style.display='block';}
 }
-
-function copyContent(){
-  var activeTab=document.querySelector('.tab.active').textContent.trim();
-  var text=activeTab==='Contestação'?contestacaoText:quantumText;
-  navigator.clipboard.writeText(text).then(function(){
-    alert('Texto copiado!');
-  });
-}
-
-function downloadTxt(){
-  var blob=new Blob([contestacaoText+'\n\n---\n\n'+quantumText],{type:'text/plain;charset=utf-8'});
-  var url=URL.createObjectURL(blob);
-  var a=document.createElement('a');
-  a.href=url;a.download='contestacao-gerada.txt';a.click();
-  URL.revokeObjectURL(url);
-}
-
+function copyContent(){var t=document.querySelector('.tab.active').textContent.trim();navigator.clipboard.writeText(t==='Contestação'?contestacaoText:quantumText).then(function(){alert('Texto copiado!');});}
+function downloadTxt(){var blob=new Blob([contestacaoText+'\n\n---\n\n'+quantumText],{type:'text/plain;charset=utf-8'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='contestacao-gerada.txt';a.click();URL.revokeObjectURL(url);}
 function resetAll(){
   document.getElementById('resultsSection').classList.remove('visible');
-  document.getElementById('contextSection').classList.remove('visible');
+  document.getElementById('themesSection').classList.remove('visible');
   document.getElementById('heroSection').classList.remove('hidden');
-  document.getElementById('fileInput').value='';
-  document.getElementById('contextInput').value='';
+  document.getElementById('fileInput').value='';document.getElementById('contextInput').value='';
   extractedText='';fileBuffer=null;contestacaoText='';quantumText='';
+  selectedThemes=[];suggestedThemes=[];customThemes=[];
 }
 </script>
 </body>
